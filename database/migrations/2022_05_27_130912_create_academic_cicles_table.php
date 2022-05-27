@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateAcademicCiclesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('academic_cicles', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('b_date');
-            $table->string('ci')->unique();
-            $table->integer('type_user');
-            $table->string('password');
-            $table->rememberToken();
+            $table->foreignId('year_id')->references('id')->on('academic_years');
+            $table->boolean('active');
             $table->timestamps();
         });
     }
@@ -32,6 +29,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('academic_cicles');
     }
 }

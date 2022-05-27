@@ -19,9 +19,35 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
+        'ci',
+        'b_date',
+        'type_user',
         'password',
+        'secction_id'
     ];
+    protected $appends = ['age'];
+
+        public function getAgeAttribute()
+        {
+                return Carbon::parse($this->attributes['birthday'])->age;
+        }
+    
+    public function Courses()
+    {
+        return $this->morphedByMany(Courses::class, 'teacher_courses');
+    }
+    
+    public function Seccion()
+    {
+        return  $this->belongsTo(Secction::class,'secction_id');
+    }
+   
+    public function Grades()
+    {
+        return $this->morphedByMany(Courses::class, 'grades_teachers');
+    }
+ 
+ 
 
     /**
      * The attributes that should be hidden for serialization.
